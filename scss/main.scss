@@ -1,8 +1,9 @@
-$primary-color: #283C67;
-$secondary-color: #eece1a;
+$primary-color: #1D223C;
+$secondary-color: #FF9A00;
 $show-home-image: true;
-$home-image:  url('./../code.png');
-$portrait: url('../img/icon.jpg');
+$home-image:  url('../img/web.jpg');
+$secondary-image: url('../img/black-background.jpg');
+$portrait: url('../img/icon1.jpg');
 $background-opacity: 0.8;
 
 @mixin easeOut {
@@ -25,6 +26,21 @@ $background-opacity: 0.8;
         background: rgba($primary-color, $background-opacity);
       }
     }
+    &#secondary-img {
+      background-image: $secondary-image;
+      background-attachment: fixed;
+      background-size: cover;
+      &:after {
+        content: '';
+        position: absolute;
+        top:0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        background: rgba($primary-color, $background-opacity);
+      }
+    }
   }
 }
 
@@ -32,6 +48,10 @@ $background-opacity: 0.8;
 @media screen and (max-width: 500px) {
   main#home h1 {
     margin-top: 10vh;
+  }
+
+  .projects{
+    grid-template-columns: 1fr;
   }
 }
 //mediaMd
@@ -65,14 +85,27 @@ $background-opacity: 0.8;
       height: 150px;
     }
   }
+  .about-info{
+    grid-template-areas:
+            'bioimage'
+            'bio';
+    grid-template-columns: 1fr;
+    }
+  .projects{
+    grid-template-columns: repeat(2,1fr);
+  }
 }
 //mediaLg
 @media screen and (min-width: 769px) and (max-width: 1170px) {
-
+  .projects{
+    grid-template-columns: repeat(3,1fr);
+  }
 }
 //mediaXl
 @media screen and (min-width: 1171px) {
-
+  .projects{
+    grid-template-columns: repeat(4,1fr);
+  }
 }
 
 @function set-text-color($color) {
@@ -88,6 +121,7 @@ $background-opacity: 0.8;
 }
 body{
   @include background();
+  background: $primary-color;
   color: set-text-color($primary-color);
   height: 100%;
   margin: 0;
@@ -109,21 +143,25 @@ h2 {
     background: rgba(lighten($primary-color, 2), 0.5);
   }
 }
+
 a {
   color: #fff;
   text-decoration: none;
 }
+
 header {
   position: fixed;
   z-index: 2;
 }
+
 .text-secondary {
   color: $secondary-color;
 }
+
 main {
   padding: 4rem;
-  height: 100%;
-
+ // height: 100%;
+ min-height: calc(100vh - 60px);
   .icons {
     margin-top: 1rem;
 
@@ -225,7 +263,6 @@ main {
       border: solid 3px $secondary-color;
     }
   }
-
   .nav-item {
     transform: translate3d(600px, 0,0);
     @include easeOut;
@@ -237,14 +274,14 @@ main {
       color: $secondary-color;
     }
   }
-
   .nav-link {
     display: inline-block;
     position: relative;
     font-size: 30px;
     text-transform: uppercase;
     padding:1rem 0;
-    font-weight: 300;
+
+    font-weight: bold;
     color: set-text-color($primary-color);
     text-decoration: none;
     @include easeOut;
@@ -254,8 +291,92 @@ main {
     }
   }
 }
+
 @for $x from 1 through 4 {
   .nav-item:nth-child(#{$x}) {
     transition-delay: $x *0.1s;
   }
 }
+//about page
+.about-info {
+  display: grid;
+  grid-gap: 30px;
+  grid-template-areas: 'bioimage bio bio';
+  grid-template-columns: repeat(3, 1fr);
+  .bio-image{
+    grid-area: bioimage;
+    margin: auto;
+    border-radius: 50%;
+    border: solid 3px $secondary-color;
+  }
+  .bio {
+    grid-area: bio;
+    font-size: 1.5rem;
+    background: lighten($primary-color, 5 );
+    padding: 0.5rem;
+    margin: 0;
+    border-bottom: $secondary-color 4px solid;
+  }
+}
+//work page
+.projects{
+  display: grid;
+  grid-gap: 0.7rem;
+  grid-template-columns: repeat(3, 1fr);
+  img {
+    width: 100%;
+    border: 3px white solid;
+    &:hover {
+      opacity: 0.5;
+      border-color: $secondary-color;
+      @include easeOut;
+    }
+  }
+}
+.btn {
+  display: block;
+  padding: 0.5rem 1rem;
+  margin-bottom: 0.3rem;
+  &:hover {
+    background: $secondary-color;
+    color: set-text-color($secondary-color);
+  }
+}
+.btn-dark {
+  @extend .btn;
+  background: darken($primary-color, 50);
+  color: #fff;
+}
+.btn-light {
+  @extend .btn;
+  background: lighten($primary-color, 50);
+  color: #333;
+}
+//contact page
+.boxes {
+  overflow: hidden;
+  margin-top: 0.5rem;
+  div {
+    font-size: 2rem;
+    border: 3px white solid;
+    padding: 1rem 2.5rem;
+    margin-bottom: 4px;
+    @include easeOut;
+    &:hover {
+      background: $secondary-color;
+      color: set-text-color($secondary-color);
+      span {
+        color: set-text-color($secondary-color);
+      }
+    }
+  }
+}
+//footer
+#main-footer {
+  text-align: center;
+  padding: 1rem;
+  background: darken($primary-color,8);
+  color: set-text-color($primary-color);
+  height: 60px;
+}
+
