@@ -1,2 +1,2 @@
 # portfolio
-Prew (https://olgatitarenko.github.io/portfolio/dist/)
+Prew (https://olgatitarenko.github.io/portfolio/)
